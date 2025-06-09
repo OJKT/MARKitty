@@ -1,3 +1,5 @@
+export const dynamic = 'force-static'
+
 export default function ContactPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
