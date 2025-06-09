@@ -1,29 +1,5 @@
-"use client"
-
-import Link from 'next/link'
 import { ClipboardEdit, FileText, List, BarChart3 } from 'lucide-react'
-
-function FeatureCard({ 
-  href, 
-  icon: Icon, 
-  title, 
-  description 
-}: { 
-  href: string
-  icon: React.ComponentType<{ className?: string }>
-  title: string
-  description: string 
-}) {
-  return (
-    <Link href={href}>
-      <div className="p-6 border rounded-lg hover:border-primary transition-colors">
-        <Icon className="h-8 w-8 mb-4" />
-        <h2 className="text-xl font-semibold mb-2">{title}</h2>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
-    </Link>
-  )
-}
+import { FeatureCard } from '@/components/home/feature-card'
 
 export default function Home() {
   const features = [
