@@ -9,7 +9,6 @@ import { CatIcon, BarChart3, Calendar, Users, Settings, Menu, X, ClipboardEdit, 
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
-  DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -37,9 +36,14 @@ export function MainNav() {
       icon: ClipboardEdit,
     },
     {
-      name: "View Saved Rubrics",
-      href: "/dashboard/rubrics/view",
+      name: "Rubrics Dashboard",
+      href: "/dashboard/rubrics",
       icon: List,
+    },
+    {
+      name: "OCR Scanner",
+      href: "/rubrics/ocr-test",
+      icon: FileText,
     },
     {
       name: "Cover Sheet",
@@ -68,8 +72,8 @@ export function MainNav() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-2 md:gap-4">
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" className="mr-2">
+            <SheetTrigger>
+              <Button variant="ghost" size="icon" className="md:hidden mr-2">
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
@@ -129,7 +133,7 @@ export function MainNav() {
             Upgrade
           </Button>
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+            <DropdownMenuTrigger>
               <Button
                 variant="ghost"
                 className="relative h-8 w-8 rounded-full"
@@ -140,11 +144,9 @@ export function MainNav() {
                 </span>
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>Profile</DropdownMenuItem>
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Logout</DropdownMenuItem>
-            </DropdownMenuContent>
+            <DropdownMenuItem>Profile</DropdownMenuItem>
+            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>Logout</DropdownMenuItem>
           </DropdownMenu>
         </div>
       </div>

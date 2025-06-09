@@ -1,57 +1,71 @@
 "use client"
 
-import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabaseClient'
-import { CoverSheetBuilder } from '@/components/cover-sheet/cover-sheet-builder'
+import Link from 'next/link'
+import { ClipboardEdit, FileText, List, BarChart3 } from 'lucide-react'
+
+function FeatureCard({ 
+  href, 
+  icon: Icon, 
+  title, 
+  description 
+}: { 
+  href: string
+  icon: React.ComponentType<{ className?: string }>
+  title: string
+  description: string 
+}) {
+  return (
+    <Link href={href}>
+      <div className="p-6 border rounded-lg hover:border-primary transition-colors">
+        <Icon className="h-8 w-8 mb-4" />
+        <h2 className="text-xl font-semibold mb-2">{title}</h2>
+        <p className="text-muted-foreground">{description}</p>
+      </div>
+    </Link>
+  )
+}
 
 export default function Home() {
-  const [connectionStatus, setConnectionStatus] = useState<'checking' | 'connected' | 'error'>('checking')
-
-  useEffect(() => {
-    async function checkConnection() {
-      try {
-        if (!supabase) {
-          setConnectionStatus('error')
-          return
-        }
-        
-        // Try to fetch something simple from Supabase
-        const { data, error } = await supabase.from('profiles').select('count').limit(1)
-        
-        if (error) {
-          console.error('Supabase connection error:', error)
-          setConnectionStatus('error')
-        } else {
-          setConnectionStatus('connected')
-        }
-      } catch (err) {
-        console.error('Connection test error:', err)
-        setConnectionStatus('error')
-      }
-    }
-
-    checkConnection()
-  }, [])
+  const features = [
+    {
+      href: '/rubrics/new',
+      icon: ClipboardEdit,
+      title: 'Create Rubric',
+      description: 'Design and create new assessment rubrics.',
+    },
+    {
+      href: '/dashboard/rubrics',
+      icon: BarChart3,
+      title: 'Rubrics Dashboard',
+      description: 'Access and manage your rubrics.',
+    },
+    {
+      href: '/rubrics/ocr-test',
+      icon: List,
+      title: 'OCR Scanner',
+      description: 'Scan and process rubrics using OCR.',
+    },
+    {
+      href: '/cover-sheet',
+      icon: FileText,
+      title: 'Cover Sheet',
+      description: 'Generate professional cover sheets.',
+    },
+  ]
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm">
-        <h1 className="text-4xl font-bold mb-8">MarKitty Cover Sheet Generator</h1>
-        
-        <div className="mb-8">
-          <h2 className="text-xl mb-2">Supabase Connection Status:</h2>
-          <div className={`p-4 rounded ${
-            connectionStatus === 'checking' ? 'bg-yellow-100' :
-            connectionStatus === 'connected' ? 'bg-green-100' :
-            'bg-red-100'
-          }`}>
-            {connectionStatus === 'checking' && 'Checking connection...'}
-            {connectionStatus === 'connected' && '✅ Connected to Supabase'}
-            {connectionStatus === 'error' && '❌ Error connecting to Supabase'}
-          </div>
-        </div>
+    <main className="container mx-auto px-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold mb-6">Welcome to MarKitty</h1>
+        <p className="text-lg text-muted-foreground mb-8">
+          Your all-in-one solution for managing rubrics and generating cover sheets.
+        </p>
 
-        <CoverSheetBuilder />
+        <div className="grid gap-6 md:grid-cols-2 mb-12">
+          {features.map((feature) => (
+            <FeatureCard key={feature.href} {...feature} />
+          ))}
+        </div>
       </div>
     </main>
   )
