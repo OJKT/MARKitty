@@ -38,9 +38,13 @@ export function RubricForm({ initialRubric, userId }: RubricFormProps) {
     setIsSubmitting(true)
 
     try {
+      if (!supabase) {
+        throw new Error('Supabase client not initialized')
+      }
+
       if (initialRubric) {
         // Update existing rubric
-        const { error } = await supabase
+        const { error } = await supabase!
           .from('rubrics')
           .update({
             title,
@@ -48,7 +52,7 @@ export function RubricForm({ initialRubric, userId }: RubricFormProps) {
             updated_at: new Date().toISOString(),
           })
           .eq('id', initialRubric.id)
-          .eq('user_id', userId) // Ensure user owns the rubric
+          .eq('user_id', userId)
 
         if (error) throw error
         toast({
@@ -57,7 +61,7 @@ export function RubricForm({ initialRubric, userId }: RubricFormProps) {
         })
       } else {
         // Create new rubric
-        const { error } = await supabase
+        const { error } = await supabase!
           .from('rubrics')
           .insert([
             {
