@@ -46,4 +46,8 @@ npm run dev
 
 Generated files follow the pattern: `Firstname Lastname - REF_CODE.docx`
 
-Example: `John Smith - EPH2.docx` 
+Example: `John Smith - EPH2.docx`
+
+## Placeholder Detection Branch
+
+This branch focuses on improving the robustness of placeholder detection. The objective is to ensure placeholders in textboxes, headers, footers, and tables are all correctly identified and replaced, even in complex DOCX structures. 
